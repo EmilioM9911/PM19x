@@ -12,3 +12,10 @@ const cuadrado = (numero) => {
 }
 
 console.log(cuadrado(9))
+
+//Ejercicio c
+const saludoPersonalizado = (nombre, edad) => {
+    return `Hola, me llamo ${nombre} y tengo ${edad} años.`;
+};
+
+console.log(saludoPersonalizado("Emilio Márquez", 21));
