@@ -8,7 +8,6 @@ function verificarUsuario(usuario) {
     });
 }
 
-// Pruebas
 verificarUsuario("admin")
     .then(res => console.log(res))      // Acceso concedido
     .catch(err => console.error(err));
