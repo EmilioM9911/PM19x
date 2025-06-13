@@ -1,23 +1,26 @@
+//importaciones
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-const Texto = () => {
+const Texto = (props) => {
+  //propiedad contenido que hereda de texto.
+  const { contenido } = props
   return (
-    <Text>Hola desde React Native</Text>
+    <Text> {contenido} </Text>
   )
-
 }
 
+//Main
 export default function App() {
   return (
     //
-
-
     <View style={styles.container}>
-
       <StatusBar style="auto" />
-      <Text>Probando ReactNative</Text>
-      <Texto></Texto>
+
+      <Texto contenido="hola"></Texto>
+      <Text contenido="mundo"></Text>
+      <Texto contenido="React native"></Texto>
+
       <Button title="Presioname"></Button>
 
     </View>
