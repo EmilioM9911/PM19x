@@ -1,27 +1,36 @@
 //importaciones
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
 
-const Texto = (props) => {
-  //propiedad contenido que hereda de texto.
-  const { children } = props
+const Texto = () => {
+  const [contenido, setContenido] = useState('Hola Mundo');
+  const actualizaTexto = () => setContenido('State Modificado');
+
+
   return (
-    <Text> {children} </Text>
-  )
-}
+    <View>
+      <Text onPress={actualizaTexto}> {contenido} </Text>
+
+    </View>
+  );
+};
 
 //Main
 export default function App() {
+  const [textoboton, setTextoboton] = useState('Tócame');
+  const actualizaBoton = () => setTextoboton('Boton modificado');
+  <Button title={textoboton} onPress={actualizaBoton} />
   return (
-    //
+    //    
     <View style={styles.container}>
       <StatusBar style="auto" />
 
-      <Texto>Hola</Texto>
-      <Text>Mundo</Text>
-      <Texto>React Native</Texto>
+      <Texto></Texto>
+      <Texto></Texto>
+      <Texto></Texto>
 
-      <Button title="Presioname"></Button>
+      <Button title={textoboton} onPress={actualizaBoton} />
 
     </View>
   );
