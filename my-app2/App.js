@@ -1,51 +1,54 @@
-// IMPORTACIONES
+//Zona de importaciones
 import React, { useState } from 'react';
-import { View, Switch, StyleSheet, Text } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
+import parseErrorStack from 'react-native/Libraries/Core/Devtools/parseErrorStack';
 
-// MAIN
-const App = () => {
-  const [activo, setActivo] = useState(false);
+export default function App() {
+  const [cargando, setCargando] = useState(false);
+  const [datos, setDatos] = useState('');
 
-  const cambiarSwitch = () => { setActivo(previousState => !previousState) }
+  const SimularCarga = () => {
+    setCargando(true);
+    setDatos('');
+
+    setTimeout(() => {
+      setCargando(false);
+      setDatos('Datos cargados correctamente');
+    }, 8000);
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.label}>Activar Característica:</Text>
+      <Text style={styles.titulo}>Activity Indicator-Prueba</Text>
+      <Button title="Cargar Datos" onPress={SimularCarga} color='#007AFF' />
 
-      <Switch
-        onValueChange={cambiarSwitch}
-        value={activo}
-      //disabled={true}
-      //trackColor={{ false: '#FF0000', true: '#00FF00' }}
-      //thumbColor={activo ? '#0000FF' : '#FFFF00'}
-      //ios_backgroundColor="#3e3e3e"
-      />
+      {cargando && (
+        <ActivityIndicator size='large' color='#007AFF' style={styles.loader} />
+      )}
 
-      <Text style={styles.statusText}>Estado actual: {activo ? 'Activado' :
-        'Desactivado'}</Text>
+
+      {datos !== '' && <Text>{datos}</Text>}
+
+      <StatusBar style="auto" />
     </View>
   );
-};
+}
 
-// ESTILOS
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-
+    backgroundColor: '#F5F5F5',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
+    justifyContent: 'center',
+    padding: 20,
   },
-  label: {
-    fontSize: 20,
-    marginBottom: 10,
+  titulo: {
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    marginBottom: 20,
   },
-  statusText: {
-    marginTop: 20,
-    fontSize: 18,
-    color: '#666',
-  },
+  loader: {
+    marginVertical: 20,
+  }
 });
-
-export default App;
