@@ -1,167 +1,78 @@
-import React, { useState, useRef } from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  StyleSheet,
-  Switch,
-  Button,
-  TextInput,
-  SafeAreaView,
-  Dimensions
-} from 'react-native';
 
-const { width } = Dimensions.get('window');
+import React, { useState } from 'react';
+import { View, Text, TextInput, Switch, Button, Alert, StyleSheet, ImageBackground } from 'react-native';
 
-const App = () => {
-  const scrollViewRef = useRef(null);
-  const [horizontal, setHorizontal] = useState(false);
-  const [showIndicators, setShowIndicators] = useState(true);
-  const [scrollEnabled, setScrollEnabled] = useState(true);
-  const [bounces, setBounces] = useState(true);
-  const [pagingEnabled, setPagingEnabled] = useState(false);
-  const [keyboardDismissMode, setKeyboardDismissMode] = useState('none');
-  const [text, setText] = useState('');
+export default function App() {
+  const [nombre, setNombre] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [aceptado, setAceptado] = useState(false);
 
-  const scrollToEnd = () => {
-    scrollViewRef.current?.scrollToEnd({ animated: true });
-  };
-
-  const scrollToTop = () => {
-    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
-  };
-
-  const changeKeyboardMode = () => {
-    const modes = ['none', 'on-drag', 'interactive'];
-    const currentIndex = modes.indexOf(keyboardDismissMode);
-    const nextIndex = (currentIndex + 1) % modes.length;
-    setKeyboardDismissMode(modes[nextIndex]);
+  const handleRegistro = () => {
+    if (!nombre || !correo) {
+      Alert.alert('Error', 'Por favor llena todos los campos');
+    } else if (!aceptado) {
+      Alert.alert('Importante', 'Debes aceptar los términos y condiciones');
+    } else {
+      Alert.alert('Éxito', 'Registro exitoso');
+    }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.controls}>
-        <Text style={styles.title}>Controles del ScrollView</Text>
-
-        <View style={styles.controlRow}>
-          <Text>Horizontal:</Text>
-          <Switch value={horizontal} onValueChange={setHorizontal} />
+    <ImageBackground source={require('./assets/nieve.jpg')} style={styles.fondo}>
+      <View style={styles.formulario}>
+        <Text style={styles.titulo}>Registro de Usuario</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Nombre completo"
+          value={nombre}
+          onChangeText={setNombre}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Correo electrónico"
+          value={correo}
+          onChangeText={setCorreo}
+        />
+        <View style={styles.switchContainer}>
+          <Text>Aceptar términos y condiciones</Text>
+          <Switch value={aceptado} onValueChange={setAceptado} />
         </View>
-
-        <View style={styles.controlRow}>
-          <Text>Mostrar indicadores:</Text>
-          <Switch value={showIndicators} onValueChange={setShowIndicators} />
-        </View>
-
-        <View style={styles.controlRow}>
-          <Text>Scroll habilitado:</Text>
-          <Switch value={scrollEnabled} onValueChange={setScrollEnabled} />
-        </View>
-
-        <View style={styles.controlRow}>
-          <Text>Efecto rebote:</Text>
-          <Switch value={bounces} onValueChange={setBounces} />
-        </View>
-
-        <View style={styles.controlRow}>
-          <Text>Modo página:</Text>
-          <Switch value={pagingEnabled} onValueChange={setPagingEnabled} />
-        </View>
-
-        <View style={styles.controlRow}>
-          <Text>Teclado al scroll:</Text>
-          <Button title={keyboardDismissMode} onPress={changeKeyboardMode} />
-        </View>
-
-        <View style={styles.buttonRow}>
-          <Button title="Ir al inicio" onPress={scrollToTop} />
-          <Button title="Ir al final" onPress={scrollToEnd} />
-        </View>
+        <Button title="Registrarse" onPress={handleRegistro} color="#007bff" />
       </View>
-
-      <ScrollView
-        ref={scrollViewRef}
-        style={styles.scrollView}
-        contentContainerStyle={styles.contentContainer}
-        horizontal={horizontal}
-        showsHorizontalScrollIndicator={showIndicators}
-        showsVerticalScrollIndicator={showIndicators}
-        scrollEnabled={scrollEnabled}
-        bounces={bounces}
-        pagingEnabled={pagingEnabled}
-        keyboardDismissMode={keyboardDismissMode}
-      >
-        {['orange', 'blue', 'green', 'red', 'black'].map((color, i) => (
-          <View key={i} style={[styles.block, { backgroundColor: color }]}>
-            <Text style={styles.blockText}>Bloque {i + 1}</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Escribe aquí..."
-              value={text}
-              onChangeText={setText}
-            />
-          </View>
-        ))}
-      </ScrollView>
-    </SafeAreaView>
+    </ImageBackground>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
+  fondo: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
-  },
-  controls: {
-    padding: 15,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  controlRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginVertical: 5,
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginTop: 10,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  contentContainer: {
-    padding: 10,
-  },
-  block: {
-    width: width - 20,
-    height: 150,
-    margin: 10,
-    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
   },
-  blockText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
+  formulario: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+  },
+  titulo: {
+    fontSize: 20,
+    color: '#fff',
+    marginBottom: 15,
   },
   input: {
-    backgroundColor: 'white',
     width: '100%',
-    padding: 8,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    padding: 10,
     borderRadius: 5,
   },
+  switchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+    justifyContent: 'space-between',
+    width: '100%',
+  }
 });
-
-export default App;
