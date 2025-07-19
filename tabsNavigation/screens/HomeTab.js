@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function Profile() {
+export default function HomeTab() {
     return (
         <View style={styles.container}>
             <View style={styles.iconRow}>
-                <Ionicons name="person-outline" size={28} color="green" />
-                <Text style={styles.title}>Perfil de usuario</Text>
+                <Ionicons name="home-outline" size={28} color="red" />
+                <Text style={styles.title}>Bienvenido a la pantalla principal</Text>
             </View>
         </View>
     );
@@ -25,9 +25,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize: 22,
+        fontSize: 18,
         fontWeight: 'bold',
-        marginLeft: 10,
-        color: 'green',
+        color: 'red',
     },
 });
